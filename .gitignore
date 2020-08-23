@@ -1,0 +1,19 @@
+﻿################################################################################
+# Ce fichier .gitignore a été automatiquement créé par Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs/CrowdFunding
+/ASP/bin
+/ASP/obj/Debug
+/CrowdFunding.BLL/bin/Debug
+/CrowdFunding.BLL/obj/Debug
+/CrowdFunding.DAL/bin/Debug
+/CrowdFunding.DAL/obj/Debug
+/CrowdFunding.DB/bin/Debug
+/CrowdFunding.DB/Importer les journaux de scripts
+/CrowdFunding.DB/obj/Debug
+/packages
+/Test
+/ToolBox.ADO/bin
+/ToolBox.ADO/obj
+/WebApplication1

@@ -1,0 +1,29 @@
+﻿@model IEnumerable<CrowdFunding.ASP.Models.Projects.Funding>
+
+@*<p>
+    @Html.ActionLink("Create New", "Create")
+</p>*@
+
+<h3>Liste des financements</h3>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Amount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FundingDate)
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Amount)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FundingDate)
+        </td>
+    </tr>
+}
+
+</table>

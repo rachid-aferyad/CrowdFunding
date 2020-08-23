@@ -1,0 +1,84 @@
+﻿@model IEnumerable<CrowdFunding.ASP.Models.Projects.ProjectListingItem>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<main id="main" class="mt-0">
+    <section id="services" class="services section-bg">
+        <div class="container">
+            <p>
+                @Html.ActionLink("Create New", "Create")
+            </p>
+
+            <div class="row">
+                @foreach (var project in Model)
+                {
+                    <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-4" data-aos="zoom-in" data-aos-delay="100">
+                        <div class="card" style="width: 18rem;">
+                            <img src="~/Content/assets/img/portfolio/portfolio-1.jpg" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">@Html.DisplayFor(model => project.Title)</h5>
+                                <p class="card-text">@Html.DisplayFor(model => project.Description)</p>
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item"></li>
+                                <li class="list-group-item">Vidéo: <a target="_blank" href=@Html.DisplayFor(model => project.VideoLink).ToString()>Lien</a></li>
+                                <li class="list-group-item">Montant: @Html.DisplayFor(model => project.TotalFunding) €</li>
+                                <li class="list-group-item">Objectif: @Html.DisplayFor(model => project.FundingCeiling) €</li>
+                                <li class="list-group-item">Date: @Html.DisplayFor(model => project.CreationDate)</li>
+                            </ul>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-5 float-left mr-1">
+                                        @Html.ActionLink("Details", "Details", new { id = project.Id }, new { @class = "btn btn-sm btn-create" })
+                                    </div>
+                                    <div class="col-5 float-right">
+                                        @Html.ActionLink("Financer", "Fund", new { projectId = project.Id, projectTitle = project.Title }, new { @class = "btn btn-sm btn-create" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            @*<table class="table">
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Title)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.VideoLink)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CreationDate)
+                        </th>
+                        <th></th>
+                    </tr>
+
+                @foreach (var item in Model) {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Title)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.VideoLink)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CreationDate)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+                            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+                            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+                        </td>
+                    </tr>
+                }
+
+                </table>*@
+            </div>
+</section>
+</main>

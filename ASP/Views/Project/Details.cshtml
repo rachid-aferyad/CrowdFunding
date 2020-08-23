@@ -1,0 +1,164 @@
+﻿@model CrowdFunding.ASP.Models.Projects.ProjectDetails
+
+@{
+    ViewBag.Title = "Details";
+    int max = ViewBag.MaxProgress;
+}
+
+
+<h2>Details</h2>
+<main id="main" class="mt-0">
+    <section id="services" class="services section-bg">
+        <div class="container">
+            <div class="section-title" data-aos="fade-up">
+                <h2>@Html.DisplayFor(model => model.Title)</h2>
+                <p></p>
+            </div>
+            <div class="row">
+                <div class="col-8">
+                    <iframe width="700"
+                            height="450"
+                            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                            src=@Html.DisplayFor(model => model.VideoLink).ToString()
+                            frameborder="0"
+                            allowfullscreen>
+                    </iframe>
+                </div>
+
+
+                <div class="col-4 m-0">
+                    <h3 class="center-block">@Html.DisplayFor(model => model.TotalFunding) €</h3>
+                    <p data-aos="fade-up" data-aos-delay="100">
+                        Collecté sur @Html.DisplayFor(model => model.FundingCeiling) €
+                    </p>
+                    <ul class="list-group list-group-flush section-bg">
+                        <li class="list-group-item section-bg"></li>
+                        <li class="list-group-item section-bg">
+                            @Html.DisplayFor(model => model.NumberFunders)
+                            Contributteurs
+                        </li>
+                        <li class="list-group-item section-bg">Date: @Html.DisplayFor(model => model.CreationDate)</li>
+                        <li class="list-group-item section-bg">
+                            <label class="col text-center">@max % </label>
+                            <div class="progress">
+                                <div id="prog" class="progress-bar progress-bar-success progress-bar-striped active">
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="list-group-item text-center section-bg">
+                            <div class="row">
+                                <div class="col-5 float-right">
+                                    @Html.ActionLink("Editer", "Edit", new { id = Model.Id }, new { @class = "float-right btn btn-create" })
+                                </div>
+                                <div class="col-7 float-left">
+                                    @Html.ActionLink("Contribuer", "Fund", new { projectId = Model.Id, projectTitle = Model.Title }, new { @class = "float-left btn btn-create" })
+                                </div>
+                            </div>
+                        </li>
+                        <li class="list-group-item section-bg"></li>
+                    </ul>
+                    @*<div class="row">
+                            <div class="col-md-6" data-aos="fade-up" data-aos-delay="100">
+                                <i class="bx bx-receipt"></i>
+                                <h4>Corporis voluptates sit</h4>
+                                <p>Consequuntur sunt aut quasi enim aliquam quae harum pariatur laboris nisi ut aliquip</p>
+                            </div>
+                            <div class="col-md-6" data-aos="fade-up" data-aos-delay="200">
+                                <i class="bx bx-cube-alt"></i>
+                                <h4>Ullamco laboris nisi</h4>
+                                <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt</p>
+                            </div>
+                        </div>*@
+                </div>
+
+            </div>
+
+            <div class="row mt-5">
+
+                <div class="col-6">
+                    @if (Model.Funding?.Count() > 0)
+                    {
+
+                        <h3 class="center-block">Financement</h3>
+
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>Date</th>
+                                <th>Montant</th>
+                            </tr>
+
+                            @foreach (var item in Model.Funding)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.FundingDate)
+                                    </td>
+                                    <td class="text-right">
+                                        @Html.DisplayFor(modelItem => item.Amount)
+                                    </td>
+                                </tr>
+                            }
+                            <tr class="bg-light">
+                                <td>Total</td>
+                                <td class="text-right">
+                                    @Html.DisplayFor(model => model.TotalFunding)
+                                </td>
+                            </tr>
+
+                        </table>
+
+                    }
+                </div>
+                <div class="col-6">
+                    @if (Model.Levels?.Count() > 0)
+                    {
+
+                        <h3 class="center-block">Paliers</h3>
+
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>Titre</th>
+                                <th>Montant</th>
+                                <th>Récompense</th>
+                            </tr>
+
+                            @foreach (var item in Model.Levels)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Title)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Amount)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Award)
+                                    </td>
+                                </tr>
+                            }
+
+                        </table>
+                    }
+                </div>
+
+            </div>
+
+            <div class="float-right">
+                @Html.ActionLink("Tous les projets >>", "Index")
+            </div>
+
+        </div>
+    </section><!-- End About Section -->
+</main>
+
+<script type="text/javascript">
+    var x = 0;
+        showProgress = function () {
+            $("#prog").css("width", x + "%")
+            x += 5;
+            if (x <= @ViewBag.MaxProgress) {
+                setTimeout("showProgress()", 200);
+            }
+        }
+</script>

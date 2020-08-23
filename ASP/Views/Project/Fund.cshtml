@@ -1,0 +1,126 @@
+﻿@model CrowdFunding.ASP.Models.Projects.ProjectDetails
+
+@{
+    ViewBag.Title = "Fund";
+}
+
+<h2>Finanacement</h2>
+<main id="main" class="mt-0">
+    <section id="services" class="services section-bg">
+        <div class="container">
+            <div class="section-title" data-aos="fade-up">
+                <h2>@Html.DisplayFor(model => model.Title)</h2>
+                <p></p>
+            </div>
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-horizontal">
+                    <h4>Financement</h4>
+                    <hr />
+
+                    <div class="center-block">
+                        @Html.DisplayFor(model => model.TotalFunding) € Collecté sur @Html.DisplayFor(model => model.FundingCeiling) €
+                        (@Html.DisplayFor(model => model.NumberFunders) Contributteurs)
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6">
+
+                            <br />
+                            @if (Model.Funding.Count() > 0)
+                            {
+
+                                <h3 class="center-block">Financement</h3>
+
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Montant</th>
+                                    </tr>
+
+                                    @foreach (var item in Model.Funding)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.FundingDate)
+                                            </td>
+                                            <td class="text-right">
+                                                @Html.DisplayFor(modelItem => item.Amount)
+                                            </td>
+                                        </tr>
+                                    }
+                                    <tr class="bg-light">
+                                        <td>Total</td>
+                                        <td class="text-right">
+                                            @Html.DisplayFor(model => model.TotalFunding)
+                                        </td>
+                                    </tr>
+
+                                </table>
+
+                            }
+                        </div>
+
+                        <div class="col-6">
+                            <br />
+                            @if (Model.Levels.Count() > 0)
+                            {
+
+                                <h3 class="center-block">Paliers</h3>
+
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <th>Titre</th>
+                                        <th>Montant</th>
+                                        <th>Récompense</th>
+                                    </tr>
+
+                                    @foreach (var item in Model.Levels)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Title)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Amount)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Award)
+                                            </td>
+                                        </tr>
+                                    }
+
+                                </table>
+                            }
+
+
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="amount">Montant</label>
+                                    <div>
+                                        <input id="amount" name="amount" type="text" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div>
+                                        <input type="submit" value="Valider" class="btn btn-create float-right" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="float-right">
+                        @Html.ActionLink("Tous les projets >>", "Index")
+                    </div>
+                </div>
+            }
+
+        </div>
+    </section>
+</main>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

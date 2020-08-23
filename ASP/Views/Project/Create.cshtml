@@ -1,0 +1,177 @@
+﻿@model CrowdFunding.ASP.Models.Projects.CreateProjectForm
+@using CrowdFunding.ASP.Models.Projects
+@using CrowdFunding.BLL.Models;
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+<main id="main" class="mt-0">
+    <section id="services" class="services section-bg">
+        <div class="container">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-horizontal" id="createProjectForm">
+                    <h4>Projet</h4>
+                    <hr />
+
+                    <div class="card card-info">
+                        <div class="card-header">Nouveau projet</div>
+                        <div class="card-body">
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            <div class="form-row">
+                                <div class="form-group col-6">
+                                    @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label" })
+                                    <div>
+                                        @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group col-6">
+                                    @Html.LabelFor(model => model.FundingCeiling, htmlAttributes: new { @class = "control-label" })
+                                    <div>
+                                        @Html.EditorFor(model => model.FundingCeiling, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.FundingCeiling, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-6">
+                                    @Html.LabelFor(model => model.AccountNumber, htmlAttributes: new { @class = "control-label" })
+                                    <div>
+                                        @Html.EditorFor(model => model.AccountNumber, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.AccountNumber, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-6">
+                                    @Html.LabelFor(model => model.Country, htmlAttributes: new { @class = "control-label" })
+                                    <div>
+                                        @Html.EditorFor(model => model.Country, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.Country, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label" })
+                                <div>
+                                    @Html.TextAreaFor(model => model.Description, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-6">
+                                    @Html.LabelFor(model => model.VideoLink, htmlAttributes: new { @class = "control-label" })
+                                    <div>
+                                        @Html.EditorFor(model => model.VideoLink, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.VideoLink, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-6">
+                                    @Html.LabelFor(model => model.Categories, htmlAttributes: new { @class = "control-label" })
+                                    <div class="form-check">
+                                        @for (int i = 0; i < Model.Categories.Count(); i++)
+                                        {
+                                            <div class="ml-2">
+                                                @Html.HiddenFor(model => model.Categories[i].Value)
+                                                @Html.CheckBoxFor(model => model.Categories[i].Selected, new { @class = "form-check-input" })
+                                            </div>
+                                            <div class="ml-3">
+                                                @Html.HiddenFor(model => model.Categories[i].Text)
+                                                @Html.DisplayFor(model => model.Categories[i].Text, new { @class = "form-check-label" })
+                                            </div>
+                                        }
+
+                                        @Html.ValidationMessageFor(model => model.Categories, "", new { @class = "text-danger" })
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Levels, htmlAttributes: new { @class = "control-label mr-2"})
+                                @Html.CheckBoxFor(model => model.IsLevelsChecked, htmlAttributes: new { @class = "control-label", @id = "levelsCheckBox", @name = "levelsCheckBox" })
+                            </div>
+
+                            <div class="form-group bg-light p-3" id="levelsDiv">
+                                <h4>Paliers</h4>
+                                <hr />
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.LevelType, htmlAttributes: new { @class = "control-label" })
+                                    <div>
+                                        @Html.EnumDropDownListFor(model => model.LevelType, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.LevelType, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div id="levels">
+                                    @Html.EditorFor(model => model.Levels)
+                                </div>
+                                <div class="form-group">
+                                    <button class="btn btn-create" type="button" id="btnAddLevel">Ajouter palier</button>
+                                    @*@Html.ActionLink("Ajouter palier", "", "", new { @class = "btn btn-create", @type = "button", @id = "btnAddLevel" })*@
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-footer">
+                            <div class="form-group">
+                                <button class="btn-create float-right" type="submit">Sauvegarder</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            }
+        </div>
+
+    </section>
+</main>
+
+
+
+@section Scripts {
+    @*@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}*@
+    <script type="text/javascript">
+
+        const levelsCheckBox = document.getElementById("levelsCheckBox");
+        const levelsDiv = document.getElementById("levelsDiv");
+        const levels = document.getElementById("levels");
+
+        levelsDiv.style.display = "none";
+
+        if (levelsCheckBox.checked) {
+            levelsDiv.style.display = "block";
+        } else {
+            levelsDiv.style.display = "none";
+        }
+
+        levelsCheckBox.addEventListener("change", e => {
+            if (levelsCheckBox.checked) {
+                $.post('/Project/AddLevelToProject', $('form').serialize(), function (partialView) {
+                    $('#levels').html(partialView);
+                });
+                levelsDiv.style.display = "block";
+            } else {
+                $.post('/Project/RemoveLevelsToProject', $('form').serialize(), function () {
+                });
+                levelsDiv.style.display = "none";
+                levels.innerHTML = "";
+            }
+        });
+
+        $("#btnAddLevel").on('click', e => {
+            e.preventDefault();
+            $.post('/Project/AddLevelToProject', $('form').serialize(), function (partialView) {
+                    $('#levels').html(partialView);
+            });
+        });
+    </script>
+}
